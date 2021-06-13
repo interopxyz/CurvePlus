@@ -59,6 +59,7 @@
     <Compile Include="Components\Bezier\LoftBezier.cs" />
     <Compile Include="Components\Bezier\FitBeziers.cs" />
     <Compile Include="Components\Bezier\ToCubicBeziers.cs" />
+    <Compile Include="Components\BoundingRectangle.cs" />
     <Compile Include="Components\CloseCurve.cs" />
     <Compile Include="Components\Bezier\ConvertToBezier.cs" />
     <Compile Include="Components\FanPolyline.cs" />
