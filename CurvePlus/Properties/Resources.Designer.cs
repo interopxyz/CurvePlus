@@ -113,6 +113,36 @@ namespace CurvePlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CP_BlendCornersD_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_BlendCornersD_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_BlendCornersT_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_BlendCornersT_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_BoundingRectangle_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_BoundingRectangle_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CP_CloseCurve_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_CloseCurve_01", resourceCulture);
@@ -123,9 +153,39 @@ namespace CurvePlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CP_CurveSpans_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_CurveSpans_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_EdgeLengthPolygon_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_EdgeLengthPolygon_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CP_FanPolyline_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_FanPolyline_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_GreyvillePoints_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_GreyvillePoints_01", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +236,26 @@ namespace CurvePlus.Properties {
         internal static System.Drawing.Bitmap CP_Grid_TriangleB_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_Grid_TriangleB_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_Lloyds_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_Lloyds_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_LloydsConstrained_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_LloydsConstrained_01", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,6 +316,16 @@ namespace CurvePlus.Properties {
         internal static System.Drawing.Bitmap CP_SpiralPlane_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_SpiralPlane_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_WeightControlPoint_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_WeightControlPoint_01", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,20 +1,19 @@
 ﻿using Grasshopper.Kernel;
-using Grasshopper.Kernel.Parameters;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace CurvePlus.Components
+namespace CurvePlus.Components.Analysis
 {
-    public class SmoothCorners : GH_Component
+    public class CurveSpans : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the SnubCorners class.
+        /// Initializes a new instance of the CurveSpans class.
         /// </summary>
-        public SmoothCorners()
-          : base("Smooth Corners", "Smooth Param",
-              "Smooth the corners of a segmented curve by unitized parameter",
-              "Curve", "Util")
+        public CurveSpans()
+          : base("Curve Spans", "Spans",
+              "Returns the curve span domains",
+              "Curve", "Analysis")
         {
         }
 
@@ -23,27 +22,15 @@ namespace CurvePlus.Components
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.tertiary; }
+            get { return GH_Exposure.quarternary; }
         }
-
 
         /// <summary>
         /// Registers all the input parameters for this component.
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curve", "C", "Curve to Smooth Corners", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Parameter", "T", "A unitized curve parameter between 0-1", GH_ParamAccess.item, 0.5);
-            pManager[1].Optional = true;
-            pManager.AddIntegerParameter("Continuity", "C", "Blend Continuity Type", GH_ParamAccess.item, 0);
-            pManager[2].Optional = true;
-
-
-            Param_Integer param = (Param_Integer)pManager[2];
-            foreach (Rhino.Geometry.BlendContinuity value in Enum.GetValues(typeof(Rhino.Geometry.BlendContinuity)))
-            {
-                param.AddNamedValue(value.ToString(), (int)value);
-            }
+            pManager.AddCurveParameter("Curve", "C", "A nurbs curve", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -51,7 +38,7 @@ namespace CurvePlus.Components
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddCurveParameter("Compound Curve", "C", "The smoothed polycurve", GH_ParamAccess.item);
+            pManager.AddIntervalParameter("Domains", "D", "The span domains of the curve", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -61,17 +48,18 @@ namespace CurvePlus.Components
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve curve = null;
-            if (!DA.GetData(0, ref curve)) return;
+            if(!DA.GetData(0, ref curve))return;
+            NurbsCurve nurbs = curve.ToNurbsCurve();
 
-            double t = 0.5;
-            DA.GetData(1, ref t);
+            int count = nurbs.SpanCount;
 
-            int continuity = 0;
-            DA.GetData(2, ref continuity);
+            List<Interval> domains = new List<Interval>();
+            for(int i = 0; i < count; i++)
+            {
+                domains.Add(nurbs.SpanDomain(i));
+            }
 
-            Curve output = curve.SmoothCorner(t, (BlendContinuity) continuity);
-
-            DA.SetData(0, output);
+            DA.SetDataList(0, domains);
         }
 
         /// <summary>
@@ -83,7 +71,7 @@ namespace CurvePlus.Components
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_BlendCornersT_01;
+                return Properties.Resources.CP_CurveSpans_01;
             }
         }
 
@@ -92,7 +80,7 @@ namespace CurvePlus.Components
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("d6d9b934-83b2-452d-ab0c-87fc73a03ac5"); }
+            get { return new Guid("3e14cf7e-f623-4e0c-8a49-997ff5bcbd9a"); }
         }
     }
 }

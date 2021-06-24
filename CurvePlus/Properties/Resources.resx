@@ -130,14 +130,32 @@
   <data name="CP_BezierSpline_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_BezierSpline-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CP_BlendCornersD_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_BlendCornersD-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CP_BlendCornersT_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_BlendCornersT-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CP_BlendCorners_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_BlendCorners-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CP_BoundingRectangle_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_BoundingRectangle-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CP_CloseCurve_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_CloseCurve-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CP_CurveSpans_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_CurveSpans-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CP_EdgeLengthPolygon_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_EdgeLengthPolygon-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CP_FanPolyline_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_FanPolyline-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CP_GreyvillePoints_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_GreyvillePoints-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CP_Grid_Diamond_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_Grid-Diamond-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -153,6 +171,12 @@
   </data>
   <data name="CP_Grid_TriangleB_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_Grid-TriangleB-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CP_LloydsConstrained_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_LloydsConstrained-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CP_Lloyds_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_Lloyds-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="CP_Polygon_Circumscribed_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_Polygon_Circumscribed-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -171,5 +195,8 @@
   </data>
   <data name="CP_SpiralPlane_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CP_SpiralPlane-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CP_WeightControlPoint_01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CP_WeightControlPoint-01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

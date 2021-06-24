@@ -56,6 +56,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Analysis\CurveSpans.cs" />
+    <Compile Include="Components\Analysis\GreyvillePoints.cs" />
     <Compile Include="Components\Bezier\LoftBezier.cs" />
     <Compile Include="Components\Bezier\FitBeziers.cs" />
     <Compile Include="Components\Bezier\ToCubicBeziers.cs" />
@@ -72,10 +74,14 @@
     <Compile Include="Components\Grids\RadialTriangle.cs" />
     <Compile Include="Components\Grids\RadialTriangleB.cs" />
     <Compile Include="Components\Polygons\CircumscribedPolygon.cs" />
+    <Compile Include="Components\Polygons\EdgePolygon.cs" />
     <Compile Include="Components\Polygons\InscribedPolygon.cs" />
     <Compile Include="Components\Polygons\StarPolygon.cs" />
     <Compile Include="Components\Spiral\AddPathSpiral.cs" />
     <Compile Include="Components\Spiral\AddSpiral.cs" />
+    <Compile Include="Components\Voronoi\Lloyds.cs" />
+    <Compile Include="Components\Voronoi\LloydsConstrained.cs" />
+    <Compile Include="Components\WeightControlPoint.cs" />
     <Compile Include="CurvePlusComponent.cs" />
     <Compile Include="CurvePlusInfo.cs" />
     <Compile Include="Library\Constants.cs" />
@@ -146,6 +152,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CP_Grid-TriangleA-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_EdgeLengthPolygon-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BoundingRectangle-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BlendCornersT-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BlendCornersD-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Lloyds-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_LloydsConstrained-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_CurveSpans-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_GreyvillePoints-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_WeightControlPoint-01.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
