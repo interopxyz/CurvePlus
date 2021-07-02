@@ -3,16 +3,16 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace CurvePlus.Components
+namespace CurvePlus.Components.Utilities
 {
-    public class WeightControlPoint : GH_Component
+    public class RemoveSegments : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the WeightControlPoint class.
+        /// Initializes a new instance of the RemoveSegment class.
         /// </summary>
-        public WeightControlPoint()
-          : base("Weight Control Points", "WeightPts",
-              "Weight control points",
+        public RemoveSegments()
+          : base("Cull Segments", "Cull Segs",
+              "Cull linear segments from a polyline by indices",
               "Curve", "Util")
         {
         }
@@ -22,7 +22,7 @@ namespace CurvePlus.Components
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.secondary; }
+            get { return GH_Exposure.primary | GH_Exposure.obscure; }
         }
 
         /// <summary>
@@ -30,9 +30,11 @@ namespace CurvePlus.Components
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curve", "C", "A nurbs curve", GH_ParamAccess.item);
-            pManager.AddIntegerParameter("Indices", "I", "Control point indices", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Weights", "W", "Control point weights", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Polyline", "P", "The source polyline", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Indices", "I", "The indices of the linear segments to remove.", GH_ParamAccess.list);
+            pManager.AddBooleanParameter("Collapse", "C", "If true, a single polyline will be returned with the segments removed. If false, a list of polylines will be returned that are broken at the specified indices", GH_ParamAccess.item, false);
+            pManager[2].Optional = true;
+
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace CurvePlus.Components
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curve", "C", "The modified curve", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Polylines", "P", "A list of polylines", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -52,26 +54,18 @@ namespace CurvePlus.Components
             Curve curve = null;
             if (!DA.GetData(0, ref curve)) return;
             NurbsCurve nurbs = curve.ToNurbsCurve();
+            Polyline polyline = nurbs.Points.ControlPolygon();
 
             List<int> indices = new List<int>();
             if (!DA.GetDataList(1, indices)) return;
 
-            List<double> weights = new List<double>();
-            if (!DA.GetDataList(2, weights)) return;
+            bool collapse = false;
+            DA.GetData(2, ref collapse);
 
-            for(int i=weights.Count;i<indices.Count;i++)
-            {
-                weights.Add(weights[weights.Count - 1]);
-            }
+            List<Polyline> polylines = new List<Polyline>();
+            polylines = polyline.RemoveSegmentsByIndex(indices, collapse);
 
-            for(int i = 0; i < indices.Count; i++)
-            {
-                int index = indices[i];
-                Point3d p = nurbs.Points[index].Location;
-                nurbs.Points.SetPoint(index, new Point3d(p.X, p.Y, p.Z), weights[i]);
-            }
-
-            DA.SetData(0, nurbs);
+            DA.SetDataList(0, polylines);
         }
 
         /// <summary>
@@ -83,7 +77,7 @@ namespace CurvePlus.Components
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_WeightControlPoint_01;
+                return Properties.Resources.CP_CullSegment_01;
             }
         }
 
@@ -92,7 +86,7 @@ namespace CurvePlus.Components
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("e43eb3e8-2cd1-4f70-8b68-ecd57cce6a44"); }
+            get { return new Guid("35143450-ce58-46aa-b272-995732b27b8b"); }
         }
     }
 }

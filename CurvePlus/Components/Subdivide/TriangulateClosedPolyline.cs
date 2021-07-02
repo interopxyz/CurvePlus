@@ -3,16 +3,16 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace CurvePlus.Components
+namespace CurvePlus.Components.Subdivide
 {
-    public class FanPolyline : GH_Component
+    public class TriangulateClosedPolyline : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the FanPolyline class.
+        /// Initializes a new instance of the TriangulateClosedPolyline class.
         /// </summary>
-        public FanPolyline()
-          : base("Fan Polyline", "Fan",
-              "Creates a series of triangulated fans from the edges of a polyline about the area centroid.",
+        public TriangulateClosedPolyline()
+          : base("Triangulate Closed Polyline", "Triangulate",
+              "Returns a list of closed triangular polylines derived from Rhino's Triangulate Closed Polyline method.",
               "Curve", "Util")
         {
         }
@@ -22,7 +22,7 @@ namespace CurvePlus.Components
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.tertiary; }
+            get { return GH_Exposure.quarternary | GH_Exposure.obscure; }
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace CurvePlus.Components
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Polyline", "P", "Polyline to snub", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Polyline", "P", "The source polyline", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace CurvePlus.Components
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddCurveParameter("Polylines", "P", "The triangular fans", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Polylines", "P", "The triangular polylines", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace CurvePlus.Components
             NurbsCurve nurbs = curve.ToNurbsCurve();
             Polyline polyline = nurbs.Points.ControlPolygon();
 
-            List<Polyline> output = polyline.Fan();
+            List<Polyline> polylines = polyline.Triangulate();
 
-            DA.SetDataList(0, output);
+            DA.SetDataList(0, polylines);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace CurvePlus.Components
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_FanPolyline_01;
+                return Properties.Resources.CP_Triangulate_01;
             }
         }
 
@@ -75,7 +75,7 @@ namespace CurvePlus.Components
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("8b8c1414-7367-4a62-a443-4fd394cc509b"); }
+            get { return new Guid("cf0176b8-dc05-44cc-b4a6-7d7386557620"); }
         }
     }
 }

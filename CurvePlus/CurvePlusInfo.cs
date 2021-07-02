@@ -18,7 +18,7 @@ namespace CurvePlus
             get
             {
                 //Return a 24x24 pixel bitmap to represent this GHA library.
-                return null;
+                return Properties.Resources.CurvePlusLogo24;
             }
         }
         public override string Description
@@ -26,7 +26,7 @@ namespace CurvePlus
             get
             {
                 //Return a short string describing the purpose of this GHA library.
-                return "";
+                return "Curve Plus is a collection of components that both expose Rhino curve methods and provides a selection of new methods.";
             }
         }
         public override Guid Id
@@ -42,7 +42,7 @@ namespace CurvePlus
             get
             {
                 //Return a string identifying you or your company.
-                return "";
+                return "David Mans";
             }
         }
         public override string AuthorContact

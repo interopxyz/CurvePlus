@@ -3,17 +3,17 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace CurvePlus.Components.Analysis
+namespace CurvePlus.Components.Utilities
 {
-    public class CurveSpans : GH_Component
+    public class OffsetByPoints : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the CurveSpans class.
+        /// Initializes a new instance of the OffsetByPoints class.
         /// </summary>
-        public CurveSpans()
-          : base("Curve Spans", "Spans",
-              "Returns the curve span domains",
-              "Curve", "Analysis")
+        public OffsetByPoints()
+          : base("Offset By Points", "OffsetPts",
+              "Offset a polyline by vertex parameters",
+              "Curve", "Util")
         {
         }
 
@@ -22,7 +22,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.quarternary | GH_Exposure.obscure; }
+            get { return GH_Exposure.secondary | GH_Exposure.obscure; }
         }
 
         /// <summary>
@@ -30,7 +30,9 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curve", "C", "A nurbs curve", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Polyline", "P", "The source polyline", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Parameter", "T", "A unitized offset parameter between 0, the original point, and 1 the area center.", GH_ParamAccess.item, 0.5);
+            pManager[1].Optional = true;
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddIntervalParameter("Domains", "D", "The span domains of the curve", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Polyline", "P", "The new polyline", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -48,18 +50,16 @@ namespace CurvePlus.Components.Analysis
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve curve = null;
-            if(!DA.GetData(0, ref curve))return;
+            if (!DA.GetData(0, ref curve)) return;
             NurbsCurve nurbs = curve.ToNurbsCurve();
+            Polyline polyline = nurbs.Points.ControlPolygon();
 
-            int count = nurbs.SpanCount;
+            double t = 0.5;
+            DA.GetData(1, ref t);
 
-            List<Interval> domains = new List<Interval>();
-            for(int i = 0; i < count; i++)
-            {
-                domains.Add(nurbs.SpanDomain(i));
-            }
+            Polyline output = polyline.OffsetByParameter(t);
 
-            DA.SetDataList(0, domains);
+            DA.SetData(0, output);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace CurvePlus.Components.Analysis
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_CurveSpans_01;
+                return Properties.Resources.CP_OffsetCp_01;
             }
         }
 
@@ -80,7 +80,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("3e14cf7e-f623-4e0c-8a49-997ff5bcbd9a"); }
+            get { return new Guid("d83f66ff-eb77-44cd-bbc3-0518e69daec5"); }
         }
     }
 }

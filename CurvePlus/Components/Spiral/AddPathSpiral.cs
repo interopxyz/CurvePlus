@@ -22,7 +22,7 @@ namespace CurvePlus.Components.Spiral
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.quinary; }
+            get { return GH_Exposure.quinary | GH_Exposure.obscure; }
         }
 
         /// <summary>

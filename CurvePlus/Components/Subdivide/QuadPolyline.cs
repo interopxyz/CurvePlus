@@ -3,17 +3,17 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace CurvePlus.Components.Analysis
+namespace CurvePlus.Components.Tesselation
 {
-    public class CurveSpans : GH_Component
+    public class QuadPolyline : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the CurveSpans class.
+        /// Initializes a new instance of the MyComponent1 class.
         /// </summary>
-        public CurveSpans()
-          : base("Curve Spans", "Spans",
-              "Returns the curve span domains",
-              "Curve", "Analysis")
+        public QuadPolyline()
+          : base("Quad Fan Polyline", "Quad",
+              "Creates a series of quad fans from the edges of a polyline about the area centroid.",
+              "Curve", "Util")
         {
         }
 
@@ -30,7 +30,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curve", "C", "A nurbs curve", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Polyline", "P", "The source polyline", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddIntervalParameter("Domains", "D", "The span domains of the curve", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Polylines", "P", "The quad fans", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -48,18 +48,13 @@ namespace CurvePlus.Components.Analysis
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve curve = null;
-            if(!DA.GetData(0, ref curve))return;
+            if (!DA.GetData(0, ref curve)) return;
             NurbsCurve nurbs = curve.ToNurbsCurve();
+            Polyline polyline = nurbs.Points.ControlPolygon();
 
-            int count = nurbs.SpanCount;
+            List<Polyline> output = polyline.QuadrangularFan();
 
-            List<Interval> domains = new List<Interval>();
-            for(int i = 0; i < count; i++)
-            {
-                domains.Add(nurbs.SpanDomain(i));
-            }
-
-            DA.SetDataList(0, domains);
+            DA.SetDataList(0, output);
         }
 
         /// <summary>
@@ -71,7 +66,7 @@ namespace CurvePlus.Components.Analysis
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_CurveSpans_01;
+                return Properties.Resources.CP_QuadTile_01;
             }
         }
 
@@ -80,7 +75,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("3e14cf7e-f623-4e0c-8a49-997ff5bcbd9a"); }
+            get { return new Guid("4b1edab8-9b17-4275-917e-b51b53d8787d"); }
         }
     }
 }

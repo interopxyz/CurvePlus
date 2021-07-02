@@ -2,18 +2,19 @@
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace CurvePlus.Components.Analysis
+namespace CurvePlus.Components.Subdivide
 {
-    public class CurveSpans : GH_Component
+    public class MidEdge : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the CurveSpans class.
+        /// Initializes a new instance of the MidEdge class.
         /// </summary>
-        public CurveSpans()
-          : base("Curve Spans", "Spans",
-              "Returns the curve span domains",
-              "Curve", "Analysis")
+        public MidEdge()
+          : base("Mid Edge Polyline", "Mid Edge",
+              "Creates a new polyline from the midpoints of an existing polyline.",
+              "Curve", "Util")
         {
         }
 
@@ -30,7 +31,9 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curve", "C", "A nurbs curve", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Polyline", "P", "The source polyline", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Close", "C", "Optionally close the output polyline from an open input", GH_ParamAccess.item, false);
+            pManager[1].Optional = true;
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddIntervalParameter("Domains", "D", "The span domains of the curve", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Polyline", "P", "The new polyline", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -48,18 +51,28 @@ namespace CurvePlus.Components.Analysis
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve curve = null;
-            if(!DA.GetData(0, ref curve))return;
+            if (!DA.GetData(0, ref curve)) return;
             NurbsCurve nurbs = curve.ToNurbsCurve();
+            Polyline polyline = nurbs.Points.ControlPolygon();
 
-            int count = nurbs.SpanCount;
+            bool close = false;
+            DA.GetData(1, ref close);
 
-            List<Interval> domains = new List<Interval>();
-            for(int i = 0; i < count; i++)
+            if (polyline.GetSegments().Count() < 2)
             {
-                domains.Add(nurbs.SpanDomain(i));
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Insufficient segments. The polyline must contain at least 2 segments.");
+                return;
             }
 
-            DA.SetDataList(0, domains);
+            if ((polyline.GetSegments().Count() == 2)&(close))
+            {
+                this.AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Cannot be closed. The polyline must contain at least 3 segments to be closed.");
+            }
+
+
+            Polyline output = polyline.Midedge(close);
+
+            DA.SetData(0, output);
         }
 
         /// <summary>
@@ -71,7 +84,7 @@ namespace CurvePlus.Components.Analysis
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_CurveSpans_01;
+                return Properties.Resources.CP_MidEdge_01;
             }
         }
 
@@ -80,7 +93,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("3e14cf7e-f623-4e0c-8a49-997ff5bcbd9a"); }
+            get { return new Guid("2b8c35b6-717c-49fc-99f9-97df5e192437"); }
         }
     }
 }

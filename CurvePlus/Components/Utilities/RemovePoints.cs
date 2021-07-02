@@ -3,17 +3,17 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace CurvePlus.Components.Analysis
+namespace CurvePlus.Components.Utilities
 {
-    public class CurveSpans : GH_Component
+    public class RemovePoints : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the CurveSpans class.
+        /// Initializes a new instance of the RemovePoints class.
         /// </summary>
-        public CurveSpans()
-          : base("Curve Spans", "Spans",
-              "Returns the curve span domains",
-              "Curve", "Analysis")
+        public RemovePoints()
+          : base("Cull Points", "Cull Pts",
+              "Cull points from a polyline by indices",
+              "Curve", "Util")
         {
         }
 
@@ -22,7 +22,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.quarternary | GH_Exposure.obscure; }
+            get { return GH_Exposure.primary | GH_Exposure.obscure; }
         }
 
         /// <summary>
@@ -30,7 +30,11 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddCurveParameter("Curve", "C", "A nurbs curve", GH_ParamAccess.item);
+            pManager.AddCurveParameter("Polyline", "P", "The source polyline", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Indices", "I", "The indices of the points to remove.", GH_ParamAccess.list);
+            pManager.AddBooleanParameter("Collapse", "C", "If true, a single polyline will be returned with the points removed. If false, a list of polylines will be returned that are broken at the specified indices", GH_ParamAccess.item, false);
+            pManager[2].Optional = true;
+
         }
 
         /// <summary>
@@ -38,7 +42,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddIntervalParameter("Domains", "D", "The span domains of the curve", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Polylines", "P", "A list of polylines",GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -48,18 +52,20 @@ namespace CurvePlus.Components.Analysis
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve curve = null;
-            if(!DA.GetData(0, ref curve))return;
+            if (!DA.GetData(0, ref curve)) return;
             NurbsCurve nurbs = curve.ToNurbsCurve();
+            Polyline polyline = nurbs.Points.ControlPolygon();
 
-            int count = nurbs.SpanCount;
+            List<int> indices = new List<int>();
+            if (!DA.GetDataList(1, indices)) return;
 
-            List<Interval> domains = new List<Interval>();
-            for(int i = 0; i < count; i++)
-            {
-                domains.Add(nurbs.SpanDomain(i));
-            }
+            bool collapse = false;
+            DA.GetData(2, ref collapse);
 
-            DA.SetDataList(0, domains);
+            List<Polyline> polylines = new List<Polyline>();
+            polylines = polyline.RemovePointsByIndex(indices, collapse);
+
+            DA.SetDataList(0, polylines);
         }
 
         /// <summary>
@@ -71,7 +77,7 @@ namespace CurvePlus.Components.Analysis
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_CurveSpans_01;
+                return Properties.Resources.CP_CullPoint_01;
             }
         }
 
@@ -80,7 +86,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("3e14cf7e-f623-4e0c-8a49-997ff5bcbd9a"); }
+            get { return new Guid("df7d6462-4b46-4d33-8364-b1a526a4789d"); }
         }
     }
 }

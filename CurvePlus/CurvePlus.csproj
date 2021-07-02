@@ -61,10 +61,13 @@
     <Compile Include="Components\Bezier\LoftBezier.cs" />
     <Compile Include="Components\Bezier\FitBeziers.cs" />
     <Compile Include="Components\Bezier\ToCubicBeziers.cs" />
-    <Compile Include="Components\BoundingRectangle.cs" />
-    <Compile Include="Components\CloseCurve.cs" />
+    <Compile Include="Components\Subdivide\MidEdge.cs" />
+    <Compile Include="Components\Subdivide\QuadPolyline.cs" />
+    <Compile Include="Components\Subdivide\TriangulateClosedPolyline.cs" />
+    <Compile Include="Components\Utilities\BoundingRectangle.cs" />
+    <Compile Include="Components\Utilities\CloseCurve.cs" />
     <Compile Include="Components\Bezier\ConvertToBezier.cs" />
-    <Compile Include="Components\FanPolyline.cs" />
+    <Compile Include="Components\Subdivide\FanPolyline.cs" />
     <Compile Include="Components\Corners\SmoothCorners.cs" />
     <Compile Include="Components\Corners\SmoothCornersDistance.cs" />
     <Compile Include="Components\Corners\SnubPolyline.cs" />
@@ -79,10 +82,12 @@
     <Compile Include="Components\Polygons\StarPolygon.cs" />
     <Compile Include="Components\Spiral\AddPathSpiral.cs" />
     <Compile Include="Components\Spiral\AddSpiral.cs" />
+    <Compile Include="Components\Utilities\OffsetByPoints.cs" />
+    <Compile Include="Components\Utilities\RemovePoints.cs" />
+    <Compile Include="Components\Utilities\RemoveSegments.cs" />
     <Compile Include="Components\Voronoi\Lloyds.cs" />
     <Compile Include="Components\Voronoi\LloydsConstrained.cs" />
-    <Compile Include="Components\WeightControlPoint.cs" />
-    <Compile Include="CurvePlusComponent.cs" />
+    <Compile Include="Components\Utilities\WeightControlPoint.cs" />
     <Compile Include="CurvePlusInfo.cs" />
     <Compile Include="Library\Constants.cs" />
     <Compile Include="Library\Extensions.cs" />
@@ -104,9 +109,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CP_CloseCurve-01.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CP_FanPolyline-01.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CP_SnubPolyline-01.png" />
@@ -179,6 +181,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CP_WeightControlPoint-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_CullPoint-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_CullSegment-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_MidEdge-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_QuadTile-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Triangulate-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_TriTile-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_OffsetCp-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CurvePlusLogo24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

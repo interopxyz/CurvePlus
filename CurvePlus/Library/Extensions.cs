@@ -11,7 +11,7 @@ namespace CurvePlus
     {
         public enum BlendContinuityModes { Position,Tangency,Curvature};
 
-        public static List<Polyline> Fan(this Polyline input)
+        public static List<Polyline> TriangularFan(this Polyline input)
         {
             Point3d center = input.CenterPoint();
             List<Polyline> output = new List<Polyline>();
@@ -27,6 +27,183 @@ namespace CurvePlus
 
                 output.Add(polyline);
             }
+            return output;
+        }
+
+        public static List<Polyline> QuadrangularFan(this Polyline input)
+        {
+            Point3d center = input.CenterPoint();
+            List<Polyline> output = new List<Polyline>();
+            Line[] segments = input.GetSegments();
+
+            for(int i =0;i<segments.Count()-1;i++)
+            {
+                Line lineA = segments[i];
+                Line lineB = segments[i+1];
+                Polyline polyline = new Polyline();
+                polyline.Add(center);
+                polyline.Add((lineA.From+lineA.To)/2.0);
+                polyline.Add(lineA.To);
+                polyline.Add((lineB.From + lineB.To) / 2.0);
+                polyline.Add(center);
+
+                output.Add(polyline);
+            }
+
+            if (input.IsClosed)
+            {
+                Line lineA = segments[segments.Count() - 1];
+                Line lineB = segments[0];
+                Polyline polyline = new Polyline();
+                polyline.Add(center);
+                polyline.Add((lineA.From + lineA.To) / 2.0);
+                polyline.Add(lineA.To);
+                polyline.Add((lineB.From + lineB.To) / 2.0);
+                polyline.Add(center);
+
+                output.Add(polyline);
+            }
+            return output;
+        }
+
+        public static Polyline OffsetByParameter(this Polyline polyline, double t)
+        {
+            Polyline output = new Polyline();
+            List<Point3d> points = polyline.ToList();
+            Point3d center = polyline.CenterPoint();
+
+            foreach(Point3d point in points)
+            {
+                output.Add(point + (center - point) * t);
+            }
+
+            return output;
+        }
+
+        public static Polyline Midedge(this Polyline polyline, bool closeOutput = false)
+        {
+            Polyline output = new Polyline();
+            Line[] segments = polyline.GetSegments();
+
+            if (polyline.IsClosed) closeOutput = true;
+
+            foreach (Line line in segments)
+            {
+                output.Add((line.From + line.To) / 2.0);
+            }
+
+            if (closeOutput)
+            {
+                Line line = segments[0];
+                output.Add((line.From + line.To) / 2.0);
+            }
+            return output;
+
+        }
+
+        public static List<Polyline> RemovePointsByIndex(this Polyline polyline, List<int> indicies, bool collapse = true)
+        {
+            List<Polyline> output = new List<Polyline>();
+            List<Point3d> points = polyline.ToList();
+
+            if (collapse)
+            {
+                int[] arrIndices = indicies.ToArray();
+                Array.Sort(arrIndices);
+                Array.Reverse(arrIndices);
+
+                foreach (int index in arrIndices)
+                {
+                    points.RemoveAt(index);
+                }
+
+                Polyline pline = new Polyline(points);
+
+                output.Add(pline);
+            }
+            else
+            {
+                Polyline pline = new Polyline();
+                
+                for(int i = 0;i<points.Count;i++)
+                {
+                    if (indicies.Contains(i))
+                    {
+                        if (pline.Count > 1) { 
+                            output.Add(new Polyline(pline));
+                            pline = new Polyline();
+                        }
+                    }
+                    else
+                    {
+                        pline.Add(points[i]);
+                    }
+
+                }
+                if (pline.Count > 1) { output.Add(pline); }
+
+            }
+
+            return output;
+        }
+
+        public static List<Polyline> Triangulate(this Polyline polyline)
+        {
+            List<Polyline> output = new List<Polyline>();
+
+            if (!polyline.IsClosed) polyline.Add(polyline[0]);
+
+            MeshFace[] faces = polyline.TriangulateClosedPolyline();
+
+            foreach(MeshFace face in faces)
+            {
+                Polyline pline = new Polyline();
+                pline.Add(polyline[face.A]);
+                pline.Add(polyline[face.B]);
+                pline.Add(polyline[face.C]);
+                pline.Add(polyline[face.A]);
+                output.Add(pline);
+            }
+
+            return output;
+        }
+
+        public static List<Polyline> RemoveSegmentsByIndex(this Polyline polyline,List<int> indicies, bool collapse = true)
+        {
+            List<Polyline> output = new List<Polyline>();
+            List<Curve> nSegments = polyline.ToNurbsCurve().DuplicateSegments().ToList();
+            List<Line> segments = polyline.GetSegments().ToList();
+
+            int[] arrIndices = indicies.ToArray();
+            Array.Sort(arrIndices);
+            arrIndices.Reverse();
+
+            foreach(int index in arrIndices)
+            {
+                segments.RemoveAt(index);
+                nSegments.RemoveAt(index);
+            }
+
+            if (collapse)
+            {
+                List<int> ptIndicies = new List<int>();
+                foreach(int index in indicies)
+                {
+                    if (!ptIndicies.Contains(index)) ptIndicies.Add(index);
+                    if (!ptIndicies.Contains(index + 1)) ptIndicies.Add(index + 1);
+                }
+
+                output.AddRange( polyline.RemovePointsByIndex(ptIndicies,true));
+            }
+            else
+            {
+                List<Curve> curves = NurbsCurve.JoinCurves(nSegments).ToList();
+                foreach(Curve curve in curves)
+                {
+                    output.Add(curve.ToNurbsCurve().Points.ControlPolygon());
+                }
+            }
+
             return output;
         }
 

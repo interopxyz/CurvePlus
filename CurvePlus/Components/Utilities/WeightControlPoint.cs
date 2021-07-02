@@ -3,17 +3,17 @@ using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
 
-namespace CurvePlus.Components.Analysis
+namespace CurvePlus.Components
 {
-    public class CurveSpans : GH_Component
+    public class WeightControlPoint : GH_Component
     {
         /// <summary>
-        /// Initializes a new instance of the CurveSpans class.
+        /// Initializes a new instance of the WeightControlPoint class.
         /// </summary>
-        public CurveSpans()
-          : base("Curve Spans", "Spans",
-              "Returns the curve span domains",
-              "Curve", "Analysis")
+        public WeightControlPoint()
+          : base("Weight Control Points", "WeightPts",
+              "Weight control points",
+              "Curve", "Util")
         {
         }
 
@@ -22,7 +22,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.quarternary | GH_Exposure.obscure; }
+            get { return GH_Exposure.secondary | GH_Exposure.obscure; }
         }
 
         /// <summary>
@@ -31,6 +31,8 @@ namespace CurvePlus.Components.Analysis
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("Curve", "C", "A nurbs curve", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Indices", "I", "Control point indices", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Weights", "W", "Control point weights", GH_ParamAccess.list);
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.AddIntervalParameter("Domains", "D", "The span domains of the curve", GH_ParamAccess.list);
+            pManager.AddCurveParameter("Curve", "C", "The modified curve", GH_ParamAccess.item);
         }
 
         /// <summary>
@@ -48,18 +50,28 @@ namespace CurvePlus.Components.Analysis
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             Curve curve = null;
-            if(!DA.GetData(0, ref curve))return;
+            if (!DA.GetData(0, ref curve)) return;
             NurbsCurve nurbs = curve.ToNurbsCurve();
 
-            int count = nurbs.SpanCount;
+            List<int> indices = new List<int>();
+            if (!DA.GetDataList(1, indices)) return;
 
-            List<Interval> domains = new List<Interval>();
-            for(int i = 0; i < count; i++)
+            List<double> weights = new List<double>();
+            if (!DA.GetDataList(2, weights)) return;
+
+            for(int i=weights.Count;i<indices.Count;i++)
             {
-                domains.Add(nurbs.SpanDomain(i));
+                weights.Add(weights[weights.Count - 1]);
             }
 
-            DA.SetDataList(0, domains);
+            for(int i = 0; i < indices.Count; i++)
+            {
+                int index = indices[i];
+                Point3d p = nurbs.Points[index].Location;
+                nurbs.Points.SetPoint(index, new Point3d(p.X, p.Y, p.Z), weights[i]);
+            }
+
+            DA.SetData(0, nurbs);
         }
 
         /// <summary>
@@ -71,7 +83,7 @@ namespace CurvePlus.Components.Analysis
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return Properties.Resources.CP_CurveSpans_01;
+                return Properties.Resources.CP_WeightControlPoint_01;
             }
         }
 
@@ -80,7 +92,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override Guid ComponentGuid
         {
-            get { return new Guid("3e14cf7e-f623-4e0c-8a49-997ff5bcbd9a"); }
+            get { return new Guid("e43eb3e8-2cd1-4f70-8b68-ecd57cce6a44"); }
         }
     }
 }

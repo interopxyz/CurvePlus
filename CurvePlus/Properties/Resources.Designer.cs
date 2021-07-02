@@ -153,6 +153,26 @@ namespace CurvePlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CP_CullPoint_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_CullPoint_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_CullSegment_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_CullSegment_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CP_CurveSpans_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_CurveSpans_01", resourceCulture);
@@ -166,16 +186,6 @@ namespace CurvePlus.Properties {
         internal static System.Drawing.Bitmap CP_EdgeLengthPolygon_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_EdgeLengthPolygon_01", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CP_FanPolyline_01 {
-            get {
-                object obj = ResourceManager.GetObject("CP_FanPolyline_01", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,6 +273,26 @@ namespace CurvePlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CP_MidEdge_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_MidEdge_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_OffsetCp_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_OffsetCp_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CP_Polygon_Circumscribed_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_Polygon_Circumscribed_01", resourceCulture);
@@ -286,6 +316,16 @@ namespace CurvePlus.Properties {
         internal static System.Drawing.Bitmap CP_Polygon_Star_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_Polygon_Star_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_QuadTile_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_QuadTile_01", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -323,9 +363,39 @@ namespace CurvePlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CP_Triangulate_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_Triangulate_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_TriTile_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_TriTile_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CP_WeightControlPoint_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_WeightControlPoint_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CurvePlusLogo24 {
+            get {
+                object obj = ResourceManager.GetObject("CurvePlusLogo24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
