@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6245EABB-F49F-4140-AF39-A4A85DE6A83E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CurvePlus</RootNamespace>
+    <AssemblyName>CurvePlus</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="RhinoCommon">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Rhino 6\System\rhinocommon.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Grasshopper">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Rhino 6\Plug-ins\Grasshopper\Grasshopper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GH_IO">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Rhino 6\Plug-ins\Grasshopper\GH_IO.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\Analysis\CurveSpans.cs" />
+    <Compile Include="Components\Analysis\GreyvillePoints.cs" />
+    <Compile Include="Components\Bezier\LoftBezier.cs" />
+    <Compile Include="Components\Bezier\FitBeziers.cs" />
+    <Compile Include="Components\Bezier\ToCubicBeziers.cs" />
+    <Compile Include="Components\Subdivide\MidEdge.cs" />
+    <Compile Include="Components\Subdivide\QuadPolyline.cs" />
+    <Compile Include="Components\Subdivide\TriangulateClosedPolyline.cs" />
+    <Compile Include="Components\Utilities\BoundingRectangle.cs" />
+    <Compile Include="Components\Utilities\CloseCurve.cs" />
+    <Compile Include="Components\Bezier\ConvertToBezier.cs" />
+    <Compile Include="Components\Subdivide\FanPolyline.cs" />
+    <Compile Include="Components\Corners\SmoothCorners.cs" />
+    <Compile Include="Components\Corners\SmoothCornersDistance.cs" />
+    <Compile Include="Components\Corners\SnubPolyline.cs" />
+    <Compile Include="Components\Grids\RadialDiamond.cs" />
+    <Compile Include="Components\Grids\RadialHexagon.cs" />
+    <Compile Include="Components\Grids\RadialQuad.cs" />
+    <Compile Include="Components\Grids\RadialTriangle.cs" />
+    <Compile Include="Components\Grids\RadialTriangleB.cs" />
+    <Compile Include="Components\Polygons\CircumscribedPolygon.cs" />
+    <Compile Include="Components\Polygons\EdgePolygon.cs" />
+    <Compile Include="Components\Polygons\InscribedPolygon.cs" />
+    <Compile Include="Components\Polygons\StarPolygon.cs" />
+    <Compile Include="Components\Spiral\AddPathSpiral.cs" />
+    <Compile Include="Components\Spiral\AddSpiral.cs" />
+    <Compile Include="Components\Utilities\OffsetByPoints.cs" />
+    <Compile Include="Components\Utilities\RemovePoints.cs" />
+    <Compile Include="Components\Utilities\RemoveSegments.cs" />
+    <Compile Include="Components\Voronoi\Lloyds.cs" />
+    <Compile Include="Components\Voronoi\LloydsConstrained.cs" />
+    <Compile Include="Components\Utilities\WeightControlPoint.cs" />
+    <Compile Include="CurvePlusInfo.cs" />
+    <Compile Include="Library\Constants.cs" />
+    <Compile Include="Library\Extensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BlendCorners-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_CloseCurve-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_SnubPolyline-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_SpiralCurve-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_SpiralPlane-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BezierSpline-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BezierCubic-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BezierLoft-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BezierQuad-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Polygon_Star-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Polygon_Circumscribed-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Polygon_Inscribed-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Grid-TriangleB-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Grid-Diamond-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Grid-Hexagon-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Grid-Quad-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Grid-TriangleA-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_EdgeLengthPolygon-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BoundingRectangle-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BlendCornersT-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_BlendCornersD-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Lloyds-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_LloydsConstrained-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_CurveSpans-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_GreyvillePoints-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_WeightControlPoint-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_CullPoint-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_CullSegment-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_MidEdge-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_QuadTile-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_Triangulate-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_TriTile-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_OffsetCp-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CurvePlusLogo24.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"
+Erase "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <FallbackCulture>en-US</FallbackCulture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartProgram>C:\Program Files\Rhino 6\System\Rhino.exe</StartProgram>
+    <StartArguments>
+    </StartArguments>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+</Project>
