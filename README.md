@@ -1,6 +1,9 @@
 # CurvePlus
-A Grasshopper 3d plugin adding a grab bag of curve utilities.
+A Grasshopper 3d Plugin adding a grab bag of curve utilities.
 
+[Download the Plugin at Food4Rhino](https://www.food4rhino.com/en/app/curve-0)
+
+---
 
 ### Grids
 The Grids available in default Grasshopper are extended with new Radial Grids
