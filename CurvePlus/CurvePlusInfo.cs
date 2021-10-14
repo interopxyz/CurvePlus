@@ -53,5 +53,13 @@ namespace CurvePlus
                 return "";
             }
         }
+
+        public override string AssemblyVersion
+        {
+            get
+            {
+                return "1.2.0.0";
+            }
+        }
     }
 }

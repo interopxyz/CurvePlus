@@ -32,6 +32,7 @@ namespace CurvePlus.Components.Grids
         {
             pManager.AddPlaneParameter("Plane", "P", "Base Plane for the grid", GH_ParamAccess.item, Plane.WorldXY);
             pManager[0].Optional = true;
+            pManager.HideParameter(0);
             pManager.AddNumberParameter("Inner Radius", "R", "The inner radius of the grid", GH_ParamAccess.item, 1);
             pManager[1].Optional = true;
             pManager.AddNumberParameter("Size", "S", "Distance between concentric grid loops", GH_ParamAccess.item, 1);
