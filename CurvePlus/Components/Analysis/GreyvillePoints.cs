@@ -13,7 +13,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public GreyvillePoints()
           : base("Greyville Points", "Greyville",
-              "Description",
+              "Returns the Greyville Points and associated parameters",
               "Curve", "Analysis")
         {
         }
@@ -23,7 +23,7 @@ namespace CurvePlus.Components.Analysis
         /// </summary>
         public override GH_Exposure Exposure
         {
-            get { return GH_Exposure.quarternary | GH_Exposure.obscure; }
+            get { return GH_Exposure.primary | GH_Exposure.obscure; }
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace CurvePlus.Components
         /// </summary>
         public AddSpiral()
           : base("Spiral", "Spiral",
-              "Creates a spiral from base plane, pitch, turn count, and two radi",
+              "Creates a spiral from base plane by pitch, turn count, and two radi",
               "Curve", "Spline")
         {
         }

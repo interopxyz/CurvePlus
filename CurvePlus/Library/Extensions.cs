@@ -50,7 +50,7 @@ namespace CurvePlus
                 output.Add(polyline);
             }
 
-            if (input.IsClosed)
+            if (input.IsClosedWithinTolerance(Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance))
             {
                 Line lineA = segments[segments.Count() - 1];
                 Line lineB = segments[0];
@@ -85,7 +85,7 @@ namespace CurvePlus
             Polyline output = new Polyline();
             Line[] segments = polyline.GetSegments();
 
-            if (polyline.IsClosed) closeOutput = true;
+            if (polyline.IsClosedWithinTolerance(Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)) closeOutput = true;
 
             foreach (Line line in segments)
             {
@@ -141,7 +141,7 @@ namespace CurvePlus
 
                 }
                 if (pline.Count > 1) { output.Add(pline); }
-
+                
             }
 
             return output;
@@ -150,9 +150,9 @@ namespace CurvePlus
         public static List<Polyline> Triangulate(this Polyline polyline)
         {
             List<Polyline> output = new List<Polyline>();
-
-            if (!polyline.IsClosed) polyline.Add(polyline[0]);
-
+            
+            if (!polyline.IsClosedWithinTolerance(Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance)) polyline.Add(polyline[0]);
+            polyline[polyline.Count - 1] = polyline[0];
             MeshFace[] faces = polyline.TriangulateClosedPolyline();
 
             foreach(MeshFace face in faces)
@@ -350,7 +350,7 @@ namespace CurvePlus
                     points.Add(crv.PointAtNormalizedLength(1.0 - t / 2.0));
                 }
 
-                if (!input.IsClosed)
+                if (!input.IsClosedWithinTolerance(Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance))
                 {
                     points[0] = input[0];
                     points[points.Count - 1] = input[input.Count - 1];
@@ -370,7 +370,7 @@ namespace CurvePlus
                     points.Add(crv.PointAtNormalizedLength(0.5));
                 }
 
-                if (!input.IsClosed)
+                if (!input.IsClosedWithinTolerance(Rhino.RhinoDoc.ActiveDoc.ModelAbsoluteTolerance))
                 {
                     points.Insert(0, input[0]);
                     points.Add(input[input.Count - 1]);

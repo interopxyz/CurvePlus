@@ -11,7 +11,7 @@ namespace CurvePlus.Components
         /// Initializes a new instance of the ConvertToBezier class.
         /// </summary>
         public ConvertToBezier()
-          : base("Curve to Bezier Spline", "To Bezier",
+          : base("To Bezier Spline", "To Bezier",
               "Converts a Nurbs Curve to a Piecewise Bezier",
               "Curve", "Bezier")
         {
