@@ -15,7 +15,7 @@ namespace CurvePlus.Components
         /// Initializes a new instance of the BoundingRectangle class.
         /// </summary>
         public BoundingRectangle()
-          : base("Bounding Rectangle", "Bound Rect",
+          : base("Bounding Rectangle", "BoundRect",
               "Solve oriented geometry bounding rectangle",
               "Curve", "Primitive")
         {

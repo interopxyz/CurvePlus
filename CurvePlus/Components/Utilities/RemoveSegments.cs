@@ -11,7 +11,7 @@ namespace CurvePlus.Components.Utilities
         /// Initializes a new instance of the RemoveSegment class.
         /// </summary>
         public RemoveSegments()
-          : base("Cull Segments", "Cull Segs",
+          : base("Cull Segments", "CullSegs",
               "Cull linear segments from a polyline by indices",
               "Curve", "Util")
         {

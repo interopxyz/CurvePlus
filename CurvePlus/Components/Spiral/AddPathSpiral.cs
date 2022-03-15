@@ -11,8 +11,8 @@ namespace CurvePlus.Components.Spiral
         /// Initializes a new instance of the AddPathSpiral class.
         /// </summary>
         public AddPathSpiral()
-          : base("Spiral Rail", "Spiral Rail",
-              "Creates a spiral along a rail curve, pitch, turn count, and two radi",
+          : base("Spiral Rail", "SpiralRail",
+              "Creates a spiral along a rail curve by pitch, turn count, and two radi",
               "Curve", "Spline")
         {
         }
@@ -31,7 +31,7 @@ namespace CurvePlus.Components.Spiral
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddCurveParameter("Curve", "C", "The rail curve for the spiral", GH_ParamAccess.item);
-            pManager.AddAngleParameter("Angle", "A", "Pitch angle", GH_ParamAccess.item, Math.PI / 4);
+            pManager.AddAngleParameter("Angle", "A", "RotationAngle", GH_ParamAccess.item, Math.PI / 4);
             pManager[1].Optional = true;
             pManager.AddNumberParameter("Turns", "T", "The number of turns in the spiral", GH_ParamAccess.item, 2);
             pManager[2].Optional = true;
@@ -65,10 +65,11 @@ namespace CurvePlus.Components.Spiral
             Plane plane = Plane.WorldYZ;
             railCurve.PerpendicularFrameAt(0, out plane);
 
-            Point3d radiusPoint = plane.Origin + plane.XAxis;
-
             double pitch = Math.PI / 4;
             DA.GetData(1, ref pitch);
+            plane.Rotate(pitch, plane.ZAxis);
+
+            Point3d radiusPoint = plane.Origin + plane.XAxis;
 
             double turnCount = 2;
             DA.GetData(2, ref turnCount);

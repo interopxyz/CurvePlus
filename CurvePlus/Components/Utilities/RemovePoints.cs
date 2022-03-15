@@ -11,7 +11,7 @@ namespace CurvePlus.Components.Utilities
         /// Initializes a new instance of the RemovePoints class.
         /// </summary>
         public RemovePoints()
-          : base("Cull Points", "Cull Pts",
+          : base("Cull Points", "CullPts",
               "Cull points from a polyline by indices",
               "Curve", "Util")
         {
