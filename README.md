@@ -1,5 +1,5 @@
 # Curve +
-A Grasshopper 3d Plugin adding a grab bag of curve utilities.
+NURBS curve utility plugin for Grasshopper 3d.
 
 ---
 
