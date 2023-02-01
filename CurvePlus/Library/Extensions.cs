@@ -19,11 +19,13 @@ namespace CurvePlus
 
             foreach (Line line in segments)
             {
-                Polyline polyline = new Polyline();
-                polyline.Add(center);
-                polyline.Add(line.From);
-                polyline.Add(line.To);
-                polyline.Add(center);
+                Polyline polyline = new Polyline
+                {
+                    center,
+                    line.From,
+                    line.To,
+                    center
+                };
 
                 output.Add(polyline);
             }
@@ -40,12 +42,14 @@ namespace CurvePlus
             {
                 Line lineA = segments[i];
                 Line lineB = segments[i+1];
-                Polyline polyline = new Polyline();
-                polyline.Add(center);
-                polyline.Add((lineA.From+lineA.To)/2.0);
-                polyline.Add(lineA.To);
-                polyline.Add((lineB.From + lineB.To) / 2.0);
-                polyline.Add(center);
+                Polyline polyline = new Polyline
+                {
+                    center,
+                    (lineA.From + lineA.To) / 2.0,
+                    lineA.To,
+                    (lineB.From + lineB.To) / 2.0,
+                    center
+                };
 
                 output.Add(polyline);
             }
@@ -54,12 +58,14 @@ namespace CurvePlus
             {
                 Line lineA = segments[segments.Count() - 1];
                 Line lineB = segments[0];
-                Polyline polyline = new Polyline();
-                polyline.Add(center);
-                polyline.Add((lineA.From + lineA.To) / 2.0);
-                polyline.Add(lineA.To);
-                polyline.Add((lineB.From + lineB.To) / 2.0);
-                polyline.Add(center);
+                Polyline polyline = new Polyline
+                {
+                    center,
+                    (lineA.From + lineA.To) / 2.0,
+                    lineA.To,
+                    (lineB.From + lineB.To) / 2.0,
+                    center
+                };
 
                 output.Add(polyline);
             }
@@ -157,11 +163,13 @@ namespace CurvePlus
 
             foreach(MeshFace face in faces)
             {
-                Polyline pline = new Polyline();
-                pline.Add(polyline[face.A]);
-                pline.Add(polyline[face.B]);
-                pline.Add(polyline[face.C]);
-                pline.Add(polyline[face.A]);
+                Polyline pline = new Polyline
+                {
+                    polyline[face.A],
+                    polyline[face.B],
+                    polyline[face.C],
+                    polyline[face.A]
+                };
                 output.Add(pline);
             }
 
@@ -221,10 +229,11 @@ namespace CurvePlus
             {
                 NurbsCurve nurbsB = nurbsA.DuplicateCurve().ToNurbsCurve();
                 nurbsB.Reverse();
-                List<NurbsCurve> curves = new List<NurbsCurve>();
-                curves.Add(nurbsA);
-
-                curves.Add(NurbsCurve.CreateBlendCurve(nurbsA, nurbsA, (BlendContinuity)continuity, factor, factor).ToNurbsCurve());
+                List<NurbsCurve> curves = new List<NurbsCurve>
+                {
+                    nurbsA,
+                    NurbsCurve.CreateBlendCurve(nurbsA, nurbsA, (BlendContinuity)continuity, factor, factor).ToNurbsCurve()
+                };
 
                 return NurbsCurve.JoinCurves(curves)[0];
             }
@@ -234,7 +243,7 @@ namespace CurvePlus
         public static Curve SmoothCorner(this Curve curve, double t, Rhino.Geometry.BlendContinuity continuity = BlendContinuity.Tangency)
         {
             if (t == 0) return curve.DuplicateCurve();
-            t = t / 2.0;
+            t /= 2.0;
 
             NurbsCurve nurbs = curve.ToNurbsCurve();
 
