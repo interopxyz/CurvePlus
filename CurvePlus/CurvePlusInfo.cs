@@ -58,7 +58,7 @@ namespace CurvePlus
         {
             get
             {
-                return "1.4.0.0";
+                return "1.5.0.0";
             }
         }
     }
