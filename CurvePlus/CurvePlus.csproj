@@ -211,7 +211,12 @@
   <ItemGroup>
     <None Include="Resources\CurvePlusLogo24.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\CP_DivideDistance-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CP_DivideLength-01.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

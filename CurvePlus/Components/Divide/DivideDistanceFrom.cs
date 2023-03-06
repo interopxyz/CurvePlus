@@ -61,40 +61,40 @@ namespace CurvePlus.Components.Divide
 
             if (parameter <= curve.Domain.Min)
             {
-                curve.DivideCurveByDistance(distance, out points, out tangents, out parameters);
+                points = curve.DivideCurveByDistance(distance);
             }
             else if (parameter >= curve.Domain.Max)
             {
                 curve.Reverse();
-                curve.DivideCurveByDistance(distance, out points, out tangents, out parameters);
+                points = curve.DivideCurveByDistance(distance);
+                points.Reverse();
             }
             else
             {
-                List<Point3d> pts= new List<Point3d>();
-                List<Vector3d> tns = new List<Vector3d>();
-                List<double> prs= new List<double>();
+                List<Point3d> pA= new List<Point3d>();
+                List<Point3d> pB = new List<Point3d>();
 
                 Curve[] curves = curve.Split(parameter);
                 curves[0].Reverse();
-                curves[0].DivideCurveByDistance(distance, out List<Point3d> pA, out List<Vector3d> vA, out List<double> tA);
+                pA = curves[0].DivideCurveByDistance(distance);
 
                 pA.Reverse();
-                vA.Reverse();
-                tA.Reverse();
                 points.AddRange(pA);
-                tangents.AddRange(vA);
-                parameters.AddRange(tA);
 
-                if (curves.Length > 1) { 
-                curves[1].DivideCurveByDistance(distance, out List<Point3d> pB, out List<Vector3d> vB, out List<double> tB);
+                if (curves.Length > 1)
+                {
+                    pB = curves[1].DivideCurveByDistance(distance);
 
-                pB.RemoveAt(0);
-                vB.RemoveAt(0);
-                tB.RemoveAt(0);
+                    pB.RemoveAt(0);
                     points.AddRange(pB);
-                    tangents.AddRange(vB);
-                    parameters.AddRange(tB);
                 }
+            }
+
+            foreach(Point3d p in points)
+            {
+                curve.ClosestPoint(p, out double t);
+                parameters.Add(t);
+                tangents.Add(curve.TangentAt(t));
             }
 
             DA.SetDataList(0, points);
@@ -111,7 +111,7 @@ namespace CurvePlus.Components.Divide
             {
                 //You can add image files to your project resources and access them like this:
                 // return Resources.IconForThisComponent;
-                return null;
+                return Properties.Resources.CP_DivideDistance_01;
             }
         }
 
