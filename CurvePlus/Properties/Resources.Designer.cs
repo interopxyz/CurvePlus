@@ -183,6 +183,26 @@ namespace CurvePlus.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CP_DivideDistance_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_DivideDistance_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CP_DivideLength_01 {
+            get {
+                object obj = ResourceManager.GetObject("CP_DivideLength_01", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CP_EdgeLengthPolygon_01 {
             get {
                 object obj = ResourceManager.GetObject("CP_EdgeLengthPolygon_01", resourceCulture);

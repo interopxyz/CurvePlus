@@ -11,6 +11,26 @@ namespace CurvePlus
     {
         public enum BlendContinuityModes { Position,Tangency,Curvature};
 
+        public static List<Point3d> DivideCurveByDistance(this Curve input,double distance)
+        {
+            List<Point3d> points = input.DivideEquidistant(distance).ToList();
+            return points;
+        }
+        public static List<Point3d> DivideCurveByLength(this Curve input, double length, bool excludeEnds = false)
+        {
+            List<Point3d> points = new List<Point3d>();
+
+            double[] parameters = input.DivideByLength(length, excludeEnds);
+            if(parameters != null)
+            { 
+            foreach (double parameter in parameters)
+            {
+                    points.Add(input.PointAt(parameter));
+            }
+            }
+            return points;
+        }
+
         public static List<Polyline> TriangularFan(this Polyline input)
         {
             Point3d center = input.CenterPoint();
