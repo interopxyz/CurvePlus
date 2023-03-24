@@ -35,8 +35,10 @@ namespace CurvePlus.Components
             pManager.AddCurveParameter("Curve", "C", "Curve to Smooth Corners", GH_ParamAccess.item);
             pManager.AddNumberParameter("Parameter", "T", "A unitized curve parameter between 0-1", GH_ParamAccess.item, 0.5);
             pManager[1].Optional = true;
-            pManager.AddIntegerParameter("Continuity", "C", "Blend Continuity Type", GH_ParamAccess.item, 0);
+            pManager.AddIntegerParameter("Blend Continuity", "B", "Blend Continuity Type", GH_ParamAccess.item, 0);
             pManager[2].Optional = true;
+            pManager.AddBooleanParameter("Close", "C", "If true, the open ends of the curve will be closed with a blend",GH_ParamAccess.item, false);
+            pManager[3].Optional = true;
 
 
             Param_Integer param = (Param_Integer)pManager[2];
@@ -69,7 +71,10 @@ namespace CurvePlus.Components
             int continuity = 0;
             DA.GetData(2, ref continuity);
 
-            Curve output = curve.SmoothCorner(t, (BlendContinuity) continuity);
+            bool closed = false;
+            DA.GetData(3, ref closed);
+
+            Curve output = curve.SmoothCorner(t, (BlendContinuity) continuity, closed);
 
             DA.SetData(0, output);
         }
