@@ -65,6 +65,9 @@
     <Compile Include="Components\Bezier\ToCubicBeziers.cs" />
     <Compile Include="Components\Divide\DivideDistanceFrom.cs" />
     <Compile Include="Components\Divide\DivideLengthFrom.cs" />
+    <Compile Include="Components\Smooth\Degree3.cs" />
+    <Compile Include="Components\Smooth\DegreeN.cs" />
+    <Compile Include="Components\Smooth\Degree2.cs" />
     <Compile Include="Components\Subdivide\MidEdge.cs" />
     <Compile Include="Components\Subdivide\QuadPolyline.cs" />
     <Compile Include="Components\Subdivide\TriangulateClosedPolyline.cs" />
@@ -216,6 +219,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\CP_DivideLength-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DegN-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Deg3-01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Deg2-01.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

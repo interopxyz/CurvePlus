@@ -11,6 +11,135 @@ namespace CurvePlus
     {
         public enum BlendContinuityModes { Position,Tangency,Curvature};
 
+        public static Polyline DegreeNSmoothing(this Polyline input, int iterations)
+        {
+            Polyline start = input.Duplicate();
+            int count = start.Count;
+
+            int total = ((iterations)*(count-1));
+            double x = 1.0 / total;
+            Point3d plot = new Point3d();
+            start = input.Duplicate();
+
+            Polyline output = new Polyline();
+
+            for (int i = 0; i < total+1; i++)
+            {
+                Polyline pline = start;
+                double t = x * i;
+                for (int j = 0; j < count; j++)
+                {
+                    Polyline temp = new Polyline();
+                    for (int k = 0; k < pline.Count - 1; k++)
+                    {
+                        plot = pline[k].Tween(pline[k + 1], t);
+                        temp.Add(plot);
+                    }
+                    pline = temp;
+                }
+                output.Add(plot);
+            }
+
+            return output;
+        }
+
+        public static Polyline Degree3Smoothing(this Polyline input, int iterations)
+        {
+            Polyline output = input.Duplicate();
+
+            if (input.IsClosed)
+            {
+                for (int i = 0; i < iterations; i++)
+                {
+                    int c = output.Count();
+                    Polyline pline = new Polyline();
+                    pline.Add(output[0].Tween(output[1], 0.5));
+                    for (int j = 1; j < c-1; j++)
+                    {
+                        int n = j - 1;
+                        int p = (j + 1) % c;
+                        Point3d ptA = output[j].Tween(output[n], 0.25);
+                        Point3d ptB = output[j].Tween(output[p], 0.25);
+                        pline.Add((ptA + ptB) / 2.0);
+                        pline.Add(output[j].Tween(output[p], 0.5));
+                    }
+                    Point3d pta = output[0].Tween(output[1], 0.25);
+                    Point3d ptb = output[0].Tween(output[c-2], 0.25);
+                    pline.Add((pta + ptb) / 2.0);
+                    pline.Add(pline[0]);
+                    output = pline;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < iterations; i++)
+                {
+                    int c = output.Count();
+                    Polyline pline = new Polyline();
+                    pline.Add(output[0]);
+                    pline.Add(output[0].Tween(output[1], 0.5));
+                    for (int j = 1; j < c - 1; j++)
+                    {
+                        int n = j - 1;
+                        int p = (j + 1) % c;
+                        Point3d ptA = output[j].Tween(output[n], 0.25);
+                        Point3d ptB = output[j].Tween(output[p], 0.25);
+                        pline.Add((ptA + ptB) / 2.0);
+                        pline.Add(output[j].Tween(output[p], 0.5));
+                    }
+                    pline.Add(output[c-1]);
+                    output = pline;
+                }
+
+            }
+
+            return output;
+        }
+
+        public static Polyline Degree2Smoothing(this Polyline input, int iterations)
+        {
+            Polyline output = input.Duplicate();
+
+            if(input.IsClosed)
+            {
+                for (int i = 0; i < iterations; i++)
+                {
+                    int c = output.Count();
+                    Polyline pline = new Polyline();
+                    for (int j = 0; j < c - 1; j++)
+                    {
+                        int k = (j + 1) % c;
+                        pline.Add(output[j].Tween(output[k], 0.25));
+                        pline.Add(output[j].Tween(output[k], 0.75));
+                    }
+                    pline.Add(pline[0]);
+                    output = pline;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < iterations; i++)
+                {
+                    int c = output.Count();
+                    Polyline pline = new Polyline();
+                    pline.Add(output[0]);
+                    pline.Add(output[0].Tween(output[1], 0.5));
+                    for (int j = 1; j < c - 2; j++)
+                    {
+                        int k = (j + 1);
+                        pline.Add(output[j].Tween(output[k], 0.25));
+                        pline.Add(output[j].Tween(output[k], 0.75));
+                    }
+                    pline.Add(output[c-2].Tween(output[c-1], 0.5));
+                    pline.Add(output[c-1]);
+                    output = pline;
+                }
+
+            }
+
+            return output;
+            }
+
         public static List<Point3d> DivideCurveByDistance(this Curve input,double distance)
         {
             List<Point3d> points = input.DivideEquidistant(distance).ToList();
@@ -260,19 +389,26 @@ namespace CurvePlus
 
         }
 
-        public static Curve SmoothCorner(this Curve curve, double t, Rhino.Geometry.BlendContinuity continuity = BlendContinuity.Tangency)
+        public static Curve SmoothCorner(this Curve curve, double t, Rhino.Geometry.BlendContinuity continuity = BlendContinuity.Tangency, bool close = false)
         {
             if (t == 0) return curve.DuplicateCurve();
+            if (t < 0) t = 0;
+            if (t > 1) t =1;
             t /= 2.0;
 
             NurbsCurve nurbs = curve.ToNurbsCurve();
 
             Curve[] segments = nurbs.DuplicateSegments();
             int count = segments.Length;
+            bool open = !curve.IsClosed;
+            if (close) open = false;
+            int c = 0;
+            if (open) c = 1;
+            int total = count - c;
 
             List<NurbsCurve> curves = new List<NurbsCurve>();
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < total; i++)
             {
                 int j = (i + 1) % count;
 
@@ -308,7 +444,7 @@ namespace CurvePlus
 
         }
 
-        public static Curve SmoothCornerByDistance(this Curve curve, double distance, Rhino.Geometry.BlendContinuity continuity = BlendContinuity.Tangency)
+        public static Curve SmoothCornerByDistance(this Curve curve, double distance, Rhino.Geometry.BlendContinuity continuity = BlendContinuity.Tangency, bool close = false)
         {
             if (distance == 0) return curve.DuplicateCurve();
 
@@ -319,7 +455,13 @@ namespace CurvePlus
 
             List<NurbsCurve> curves = new List<NurbsCurve>();
 
-            for (int i = 0; i < count; i++)
+            bool open = !curve.IsClosed;
+            if (close) open = false;
+            int c = 0;
+            if (open) c = 1;
+            int total = count - c;
+
+            for (int i = 0; i < total; i++)
             {
                 int j = (i + 1) % count;
 
@@ -334,14 +476,37 @@ namespace CurvePlus
                 nurbsC.Domain = new Interval(0, 1.0);
 
                 double ta = 0.5;
-                if(distance*2<nurbsA.GetLength())nurbsA.LengthParameter(distance, out ta);
+                if(open && (i == 0))
+                {
+                    ta = 1.0;
+                    if (distance < nurbsA.GetLength()) nurbsA.LengthParameter(distance, out ta);
+                }
+                else
+                {
+                    if (distance * 2 < nurbsA.GetLength()) nurbsA.LengthParameter(distance, out ta);
+                }
 
                 double tb = 0.5;
-                if (distance * 2 < nurbsB.GetLength()) nurbsB.LengthParameter(distance, out tb);
+                if (open && (i == (total-1)))
+                {
+                    tb = 1.0;
+                    if (distance < nurbsB.GetLength()) nurbsB.LengthParameter(distance, out tb);
+                }
+                else
+                {
+                    if (distance * 2 < nurbsB.GetLength()) nurbsB.LengthParameter(distance, out tb);
 
-                double tc = 0.5;
-                if (distance * 2 < nurbsC.GetLength()) nurbsC.LengthParameter(distance, out tc);
+                }
 
+                    double tc = 0.5;
+                if (open && (i == (total - 1)))
+                {
+                    if (distance < nurbsC.GetLength()) nurbsC.LengthParameter(distance, out tc);
+                }
+                else
+                {
+                    if (distance * 2 < nurbsC.GetLength()) nurbsC.LengthParameter(distance, out tc);
+                }
                 NurbsCurve blendCurve = NurbsCurve.CreateBlendCurve(nurbsA, ta, true, continuity, nurbsB, tb, true, continuity).ToNurbsCurve();
 
                 curves.Add(blendCurve);
@@ -413,6 +578,10 @@ namespace CurvePlus
             }
         }
 
+        public static Point3d Tween(this Point3d source, Point3d target, double parameter = 0.5)
+        {
+            return source + (target - source) * parameter;
+        }
 
     }
 }
