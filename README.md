@@ -1,6 +1,8 @@
 # Curve +
 NURBS curve utility plugin for Grasshopper 3d.
 
+_Like Curve+ [Buy me a coffee :D](http://www.buymeacoffee.com/davidmans)_
+
 ---
 
 Curve plus is a collection of curve modifier components developed over several years and wrapped up in this little library. The components range from simply exposing Rhinocommon curve commands, like spirals and control point weighting, to new tools like blending corners and a range of radial spirals. These components integrate into existing Grasshopper Curve, Vector, and Mesh tabs.
